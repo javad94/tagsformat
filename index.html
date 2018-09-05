@@ -37,11 +37,12 @@
             // console.log('tags',tags);
             var output = ".\n";
             output = output.repeat(5);
+            console.log(output);
             tags.split('\n').forEach(function (item) {
                 output += '#' + item.trim().replace(/ /g, '_') + ' '
             });
             // console.log('out',output);
-            document.getElementById('output').innerText = output;
+            document.getElementById('output').value = output;
         }
 
         function select() {
