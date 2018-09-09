@@ -15,9 +15,9 @@
 
     <style>
         #cont {
-            margin: 20px;
-            width: 80px;
-            height: 80px;
+            margin: 1em;
+            width: 5em;
+            height: 5em;
             position: relative;
         }
     </style>
@@ -41,13 +41,20 @@
                 <textarea class="mb-2 form-control" rows="5" id="tags" onkeydown="convert();"></textarea>
             </div>
 
-            <button type="button" class="mb-2 btn btn-primary btn-block btn-lg" onclick="cleartext();">Clear</button>
-
             <div class="form-group">
                 <h4 for="comment" class='text-center' id="outcount">Output</h4>
                 <textarea class="mb-2 form-control" rows="6" id="output" readonly></textarea>
             </div>
-            <button type="button" class="btn btn-success btn-block btn-lg" onclick="select();">Copy</button>
+            <div class="form-row">
+                    <div class="col">
+                            <button type="button" class="btn btn-success btn-block btn-lg" onclick="select();">Copy</button>
+                    </div>
+                    <div class="col">
+                            <button type="button" class="mb-2 btn btn-danger btn-block btn-lg" onclick="cleartext();">Clear</button>
+                    </div>
+            </div>
+            
+            
         </form>
 
     </div>
