@@ -38,7 +38,7 @@
             </div>
             <!-- </div> -->
             <div class="form-group">
-                <textarea class="mb-2 form-control" rows="5" id="tags" onkeydown="convert();"></textarea>
+                <textarea class="mb-2 form-control" rows="5" id="tags" onkeyup="convert();"></textarea>
             </div>
 
             <div class="form-group">
@@ -113,7 +113,9 @@
             var output = ".\n";
             output = output.repeat(5);
             tags.split('\n').forEach(function (item) {
+                if (item.length > 0) {
                 output += '#' + item.trim().replace(/ /g, '_') + ' ';
+                }
             });
             // console.log('out',output);
             tagcount();
