@@ -123,10 +123,15 @@
             // console.log('tags',tags);
             var output = ".\n";
             output = output.repeat(5);
+            var english = /^[A-Za-z0-9]*$/;
             tags.split('\n').forEach(function (item) {
                 if (item.length > 0) {
-                output += '#' + item.trim().replace(/ /g, '_') + ' ';
+                    if (english.test(item[0])) {
+                    output += '#' + item.trim().replace(/ /g, '') + ' ';
+                } else {
+                    output += '#' + item.trim().replace(/ /g, '_') + ' ';
                 }
+            }
             });
             // console.log('out',output);
             tagcount();
