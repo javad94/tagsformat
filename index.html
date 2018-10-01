@@ -49,12 +49,12 @@
             </div>
             <!-- </div> -->
             <div class="form-group">
-                <textarea placeholder="Type your tags, each on one line.&#013;&#010;Space will be converted to underline." dir="auto" class="mb-2 form-control" rows="5" id="tags" onkeyup="convert();"></textarea>
+                <textarea placeholder="Type your tags, each on one line.&#013;&#010;Space will be converted to underline." dir="auto" class="mb-2 form-control" rows="6" id="tags" onkeyup="convert();"></textarea>
             </div>
 
             <div class="form-group">
                 <h4 for="comment" class='text-center' id="outcount">Output</h4>
-                <textarea dir="auto" class="mb-2 form-control" rows="6" id="output" readonly></textarea>
+                <textarea dir="auto" class="mb-2 form-control" rows="3" id="output" readonly></textarea>
             </div>
             <div class="form-row">
                     <div class="col">
@@ -121,8 +121,7 @@
         function convert() {
             var tags = document.getElementById('tags').value;
             // console.log('tags',tags);
-            var output = ".\n";
-            output = output.repeat(5);
+            var output = "";
             var english = /^[A-Za-z0-9]*$/;
             tags.split('\n').forEach(function (item) {
                 if (item.length > 0) {
@@ -139,8 +138,12 @@
         }
 
         function select() {
+            output = ".\n";
+            output = output.repeat(5);
             var tags = document.getElementById('output');
-            console.log(tags);
+            tags.value = output + tags.value;
+            tags.scrollTo(0,tags.scrollHeight);
+            // console.log(tags);
             tags.select();
             document.execCommand('copy');
         }
