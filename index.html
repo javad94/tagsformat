@@ -134,7 +134,9 @@
             });
             // console.log('out',output);
             tagcount();
-            document.getElementById('output').value = output;
+            outarea = document.getElementById('output');
+            outarea.value = output;
+            outarea.scrollTo(0,outarea.scrollHeight);
         }
 
         function select() {
