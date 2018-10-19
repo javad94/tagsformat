@@ -41,7 +41,7 @@
             <!-- <div class="form-inline text-center"> -->
             <div class="form-row">
                 <div class="col d-flex align-items-center justify-content-start">
-                    <h3 for="comment" class='mt-2'>Tags Input</h3>
+                    <h3 for="comment" class='mt-2'>Tags Dups Remover</h3>
                 </div>
                 <div class="col">
                     <div id="cont" class="float-right"></div>
@@ -56,16 +56,12 @@
                 <div class="form-row">
                     <div class="col">
                         <div class="custom-control custom-checkbox">
-                            <input type="checkbox" class="custom-control-input" id="dotcheck">
+                            <input type="checkbox" class="custom-control-input" id="dotcheck" checked>
                             <label class="custom-control-label" for="dotcheck">Dots</label>
-                        </div>
-                        <div class="custom-control custom-checkbox">
-                                <input type="checkbox" class="custom-control-input" id="linebreakcheck">
-                                <label class="custom-control-label" for="linebreakcheck">remove line break</label>
                         </div>
                     </div>
                     <div class="col">
-                        <h4 for="comment" class='text-center' id="outcount">Output</h4>
+                        <h4 for="comment" class='text-left' id="outcount">Output</h4>
                     </div>
                 <textarea dir="auto" class="mb-2 form-control" rows="3" id="output" readonly></textarea>
             </div>
@@ -154,11 +150,17 @@
         }
 
         function select() {
-            output = ".\n";
-            output = output.repeat(5);
-            output = "";
+            var dots = document.getElementById('dotcheck').checked;
             var tags = document.getElementById('output');
-            tags.value = output + tags.value;
+            if (dots == true) {
+                output = ".\n";
+                output = output.repeat(5);
+                tags.value = output + tags.value;
+            } else {
+                convert();
+                tags.value = tags.value;
+            }  
+            
             tags.scrollTo(0,tags.scrollHeight);
             // console.log(tags);
             tags.select();
