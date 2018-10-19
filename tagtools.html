@@ -55,15 +55,18 @@
             <div class="form-group">
                 <div class="form-row">
                     <div class="col">
-                    <div class="custom-control custom-checkbox">
-                            <input type="checkbox" class="custom-control-input" id="dotcheck" checked>
+                        <div class="custom-control custom-checkbox">
+                            <input type="checkbox" class="custom-control-input" id="dotcheck">
                             <label class="custom-control-label" for="dotcheck">Dots</label>
-                    </div>
+                        </div>
+                        <div class="custom-control custom-checkbox">
+                                <input type="checkbox" class="custom-control-input" id="linebreakcheck">
+                                <label class="custom-control-label" for="linebreakcheck">remove line break</label>
+                        </div>
                     </div>
                     <div class="col">
-                    <h4 for="comment" class='text-left' id="outcount">Output</h4>
-                </div>
-                </div>
+                        <h4 for="comment" class='text-center' id="outcount">Output</h4>
+                    </div>
                 <textarea dir="auto" class="mb-2 form-control" rows="3" id="output" readonly></textarea>
             </div>
             <div class="form-row">
@@ -133,34 +136,29 @@
             // console.log('tags',tags);
             var output = "";
             var english = /^[A-Za-z0-9]*$/;
-            tags.split('\n').forEach(function (item) {
-                if (item.length > 0) {
-                    if (english.test(item[0])) {
-                    output += '#' + item.trim().replace(/ /g, '') + ' ';
-                } else {
-                    output += '#' + item.trim().replace(/ /g, '_') + ' ';
-                }
-            }
-            });
+            tags = tags.replace(/\n/g, " ");
+            tags = tags.trim();
+            tags = tags.split(' ');
+            tags = tags.map(function(item){return item.toLowerCase()});
+            console.log(tags);
+            tags = new Set(tags);
+            console.log(tags);
+            tags.forEach(function(item){
+                output += " " + item;
+            })
             // console.log('out',output);
-            tagcount();
             outarea = document.getElementById('output');
             outarea.value = output;
             outarea.scrollTo(0,outarea.scrollHeight);
+            bar.animate(tags.size / 30);
         }
 
         function select() {
-            var dots = document.getElementById('dotcheck').checked;
+            output = ".\n";
+            output = output.repeat(5);
+            output = "";
             var tags = document.getElementById('output');
-            if (dots == true) {
-                output = ".\n";
-                output = output.repeat(5);
-                tags.value = output + tags.value;
-            } else {
-                convert();
-                tags.value = tags.value;
-            }  
-            
+            tags.value = output + tags.value;
             tags.scrollTo(0,tags.scrollHeight);
             // console.log(tags);
             tags.select();
@@ -170,7 +168,7 @@
         function tagcount() {
             var tags = document.getElementById('tags').value;
             var out = document.getElementById('outcount');
-            counts = tags.split('\n').length;
+            counts = tags.split(' ').length;
             // out.innerText = `Output ${counts} tags`;
             bar.animate(counts / 30);
         }
