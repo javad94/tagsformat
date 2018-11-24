@@ -145,8 +145,8 @@
             // console.log('out',output);
             outarea = document.getElementById('output');
             outarea.value = output;
-            outarea.scrollTo(0,outarea.scrollHeight);
-            bar.animate(tags.size / 30);
+            outarea.scrollTo(0, outarea.scrollHeight);
+            tagcount();
         }
 
         function select() {
@@ -170,7 +170,7 @@
         function tagcount() {
             var tags = document.getElementById('tags').value;
             var out = document.getElementById('outcount');
-            counts = tags.split(' ').length;
+            counts = tags.split('#').length - 1;
             // out.innerText = `Output ${counts} tags`;
             bar.animate(counts / 30);
         }
