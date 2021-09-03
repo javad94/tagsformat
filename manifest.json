@@ -3,12 +3,12 @@
     "name": "Tags Format",
     "icons": [
         {
-            "src": "/favicon.png",
+            "src": "/tagsformat/favicon.png",
             "type": "image/png",
             "sizes": "128x128"
         },
         {
-            "src": "/favicon.png",
+            "src": "/tagsformat/favicon.png",
             "type": "image/png",
             "sizes": "512x512"
         }
