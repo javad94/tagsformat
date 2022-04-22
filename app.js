@@ -3,9 +3,93 @@ const app = Vue.createApp({
         return {
             name: "Tags Input",
             tags_name: [],
+            bar: null,
         }
     },
     methods: {
+        load_progress() {
+            this.bar = new ProgressBar.Circle('#cont', {
+                color: '#aaa',
+                strokeWidth: 4,
+                trailWidth: 2,
+                easing: 'easeInOut',
+                duration: 200,
+                text: {
+                    autoStyleContainer: false
+                },
+                from: {
+                    color: '#FFEA82',
+                    a: 0
+                },
+                to: {
+                    color: '#ED6A5A',
+                    a: 1
+                },
+                step: function (state, circle) {
+                    circle.path.setAttribute('stroke', state.color);
+                    var value = Math.round(circle.value() * 30);
+                    if (value === 0) {
+                        circle.setText('');
+                    } else {
+                        circle.setText(value);
+                    }
+    
+                }
+            });
+            this.bar.text.style.fontFamily = '"Raleway", Helvetica, sans-serif';
+            this.bar.text.style.fontSize = '2rem';
+        },
+
+        convert() {
+            const tags = document.getElementById('tags').value;
+            let output = "";
+            const english = /^[A-Za-z0-9]*$/;
+            tags.split('\n').forEach(function (item) {
+                if (item.length > 0) {
+                    if (english.test(item[0])) {
+                        output += '#' + item.trim().replace(/ /g, '') + ' ';
+                    } else {
+                        output += '#' + item.trim().replace(/ /g, '_') + ' ';
+                    }
+                }
+            });
+            this.tagcount();
+            outarea = document.getElementById('output');
+            outarea.value = output;
+            outarea.scrollTo(0, outarea.scrollHeight);
+        },
+
+        select() {
+            const dots = document.getElementById('dotcheck').checked;
+            const tags = document.getElementById('output');
+            if (dots == true) {
+                output = ".\n";
+                output = output.repeat(5);
+                tags.value = output + tags.value;
+            } else {
+                this.convert();
+                tags.value = tags.value;
+            }
+
+            tags.scrollTo(0, tags.scrollHeight);
+            // console.log(tags);
+            tags.select();
+            document.execCommand('copy');
+        },
+
+        tagcount() {
+            const tags = document.getElementById('tags').value;
+            const out = document.getElementById('outcount');
+            const counts = tags.split('\n').length;
+            this.bar.animate(counts / 30);
+        },
+
+        cleartext() {
+            document.getElementById('tags').value = ''
+            document.getElementById('output').value = ''
+            this.bar.animate(0)
+        },
+
         save_tags() {
             const value = this.$refs.tags.value
             if (!value){return}
@@ -33,6 +117,7 @@ const app = Vue.createApp({
         load_tags(name) {
             const tags = get_item(`tags_${name}`)
             this.$refs.tags.value = tags
+            this.tagcount()
         },
         
         remove_tags(name) {
@@ -44,6 +129,7 @@ const app = Vue.createApp({
     },
     mounted: function () {
         this.load_tags_name()
+        this.load_progress()
     }
 })
 

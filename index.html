@@ -44,8 +44,6 @@
 
 <body>
     <div class="container" id="app">
-        <!-- <h1>Hello, world!</h1> -->
-        <!-- <div class="form-inline text-center"> -->
         <div class="row">
             <div class="col d-flex align-items-center justify-content-start">
                 <h3 for="comment" class='mt-2'>{{ name }}</h3>
@@ -61,7 +59,7 @@
             <div class="col">
                 <textarea ref="tags"
                     placeholder="Type your tags, each on one line.&#013;&#010;Space will be converted to underline."
-                    dir="auto" class="mb-2 form-control " rows="9" id="tags" onkeyup="convert();"></textarea>
+                    dir="auto" class="mb-2 form-control " rows="9" id="tags" @keyup="convert"></textarea>
             </div>
         </div>
         <div class="row">
@@ -107,11 +105,11 @@
         </div>
         <div class="row">
             <div class="col">
-                <button type="button" class="btn btn-success btn-block btn-lg w-100" onclick="select();">Copy</button>
+                <button type="button" class="btn btn-success btn-block btn-lg w-100" @click="select">Copy</button>
             </div>
             <div class="col">
                 <button type="button" class="mb-2 btn btn-danger btn-block btn-lg w-100"
-                    onclick="cleartext();">Clear</button>
+                    @click="cleartext">Clear</button>
             </div>
         </div>
     </div>
@@ -119,89 +117,6 @@
 
     <script src="progressbar.min.js"></script>
     <script src="app.js"></script>
-    <script>
-        var bar = new ProgressBar.Circle('#cont', {
-            color: '#aaa',
-            // This has to be the same size as the maximum width to
-            // prevent clipping
-            strokeWidth: 4,
-            trailWidth: 2,
-            easing: 'easeInOut',
-            duration: 200,
-            text: {
-                autoStyleContainer: false
-            },
-            from: {
-                color: '#FFEA82',
-                a: 0
-            },
-            to: {
-                color: '#ED6A5A',
-                a: 1
-            },
-            step: function (state, circle) {
-                circle.path.setAttribute('stroke', state.color);
-                var value = Math.round(circle.value() * 30);
-                if (value === 0) {
-                    circle.setText('');
-                } else {
-                    circle.setText(value);
-                }
-
-            }
-        });
-        bar.text.style.fontFamily = '"Raleway", Helvetica, sans-serif';
-        bar.text.style.fontSize = '2rem';
-
-        function convert() {
-            var tags = document.getElementById('tags').value;
-            var output = "";
-            var english = /^[A-Za-z0-9]*$/;
-            tags.split('\n').forEach(function (item) {
-                if (item.length > 0) {
-                    if (english.test(item[0])) {
-                        output += '#' + item.trim().replace(/ /g, '') + ' ';
-                    } else {
-                        output += '#' + item.trim().replace(/ /g, '_') + ' ';
-                    }
-                }
-            });
-            tagcount();
-            outarea = document.getElementById('output');
-            outarea.value = output;
-            outarea.scrollTo(0, outarea.scrollHeight);
-        }
-
-        function select() {
-            var dots = document.getElementById('dotcheck').checked;
-            var tags = document.getElementById('output');
-            if (dots == true) {
-                output = ".\n";
-                output = output.repeat(5);
-                tags.value = output + tags.value;
-            } else {
-                convert();
-                tags.value = tags.value;
-            }
-
-            tags.scrollTo(0, tags.scrollHeight);
-            // console.log(tags);
-            tags.select();
-            document.execCommand('copy');
-        }
-
-        function tagcount() {
-            const tags = document.getElementById('tags').value;
-            const out = document.getElementById('outcount');
-            const counts = tags.split('\n').length;
-            bar.animate(counts / 30);
-        }
-
-        function cleartext() {
-            document.getElementById('tags').value = '';
-            document.getElementById('output').value = '';
-        }
-    </script>
 </body>
 
 </html>
