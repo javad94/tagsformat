@@ -118,6 +118,7 @@ const app = Vue.createApp({
             const tags = get_item(`tags_${name}`)
             this.$refs.tags.value = tags
             this.tagcount()
+            this.convert()
         },
         
         remove_tags(name) {
